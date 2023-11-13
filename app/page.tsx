@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { fetchCars } from "@/utils";
 import { fuels, yearsOfProduction } from "@/constants";
 import Image from "next/image";
-
+import { CarState } from "@/types";
 
 
 
@@ -51,7 +51,7 @@ export default  function Home() {
   }, [fuel, year, limit, manufacturer, model])
   
 
-  const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
+  
 
   return (
     <main className="overflow-hidden">
@@ -66,16 +66,16 @@ export default  function Home() {
           <SearchBar setManufacturer={setManufacturer} setModel={setModel} />
 
           <div className="home__filter-container">
-            <CustomFilter title="fuel" options={fuels} setFilter={setFuel} />
-            <CustomFilter title="year" options={yearsOfProduction} setFilter={setYear} />
+            <CustomFilter options={fuels} setFilter={setFuel} />
+            <CustomFilter  options={yearsOfProduction} setFilter={setYear} />
           </div>
         </div>
 
         {allCars.length > 0 ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
-                <CarCard car={car} />
+              {allCars?.map((car, index) => (
+                <CarCard key={`car-${index}`} car={car} />
               ))}
             </div>
               {loading && (
@@ -94,7 +94,7 @@ export default  function Home() {
             <h2 className="text-black text-xl font-bold">
               Oops, no results
             </h2>
-            <p>{allCars?.message}</p>
+          
           </div>
         )}
 
