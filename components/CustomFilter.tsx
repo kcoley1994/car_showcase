@@ -2,28 +2,28 @@
 
 import { Fragment, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
 import { Listbox, Transition } from '@headlessui/react';
 import { CustomFilterProps } from '@/types';
-import { updateSearchParams } from '@/utils';
 
-const CustomFilter = ({ title, options, setFilter }: CustomFilterProps) => {
+
+export default function CustomFilter<T>({ options, setFilter }: CustomFilterProps<T>) {
   
 
-  const [selected, setSelected] = useState(options[0]);
+  const [menu, setMenu] = useState(options[0]);
 
 
   return (
     <div className='w-fit'>
       <Listbox 
-        value={selected} 
+        value={menu} 
         onChange={(e) => {
-          setSelected(e);
-          setFilter(e.value);
+          setMenu(e);
+          setFilter(e.value as unknown as T);
           }} >
         <div className="relative w-fit z-10">
           <Listbox.Button className="custom-filter__btn">
-            <span className='block truncate'>{selected.title}</span>
+            <span className='block truncate'>{menu.title}</span>
             <Image src='/chevron-up-down.svg' 
               alt='chevron up down' 
               width={20} 
@@ -59,4 +59,4 @@ const CustomFilter = ({ title, options, setFilter }: CustomFilterProps) => {
   )
 }
 
-export default CustomFilter
+

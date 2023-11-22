@@ -52,6 +52,11 @@ export interface CustomFilterProps<T> {
 
 }
 
+export interface SearchBarProps {
+    setManufacturer: (manufacturer: string) => void;
+    setModel: (model: string) => void;
+}
+
 
 export interface ShowMoreProps {
     pageNumber: number;
